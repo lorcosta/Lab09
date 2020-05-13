@@ -28,7 +28,21 @@ public class FXMLController {
 
     @FXML
     void doCalcolaConfini(ActionEvent event) {
-
+    	this.txtResult.clear();
+    	String anno=txtAnno.getText();
+    	Integer year;
+    	try {
+    		year=Integer.parseInt(anno);
+    	}catch(NumberFormatException ne) {
+    		txtResult.appendText("L'anno inserito non ha un formato corretto");
+    		ne.printStackTrace();
+    		throw new NumberFormatException();
+    	}
+    	//creo il grafo
+    	model.createGraph(year);
+    	//stampo gli stati con il relativo numero di stati confinanti
+    	txtResult.appendText(""+model.statiConfinanti());
+    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
