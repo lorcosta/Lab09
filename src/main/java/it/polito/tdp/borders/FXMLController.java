@@ -39,9 +39,26 @@ public class FXMLController {
     
     @FXML
     void doCercaSitiRaggiungibili(ActionEvent event) {
+    	this.txtResult.clear();
     	Country source=this.cmbBox.getValue();
-    	Set<Country> raggiungibili=model.cercaSitiRaggiungibili(source);
+    	String anno=txtAnno.getText();
+    	if(anno==null) {
+    		txtResult.appendText("Inserisci prima un anno di riferimento e calcola i confini");
+    		return;
+    	}
+    	Integer year;
+    	try {
+    		year=Integer.parseInt(anno);
+    	}catch(NumberFormatException ne) {
+    		txtResult.appendText("L'anno inserito non ha un formato corretto");
+    		ne.printStackTrace();
+    		throw new NumberFormatException();
+    	}
+    	model.createGraph(year);
+    	//Set<Country> raggiungibili=model.cercaSitiRaggiungibili(source);
+    	List<Country> raggiungibili=model.cercaSitiRaggiungibili(source);
     	this.txtResult.appendText("Le città raggiungibili sono:\n"+raggiungibili.toString());
+    	this.txtResult.appendText("\nE sono esattamente: "+raggiungibili.size());
     }
     
     @FXML

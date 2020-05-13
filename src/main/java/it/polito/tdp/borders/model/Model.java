@@ -11,6 +11,7 @@ import org.jgrapht.Graphs;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.DepthFirstIterator;
 
 import it.polito.tdp.borders.db.BordersDAO;
 
@@ -66,9 +67,18 @@ public class Model {
 		return dao.loadAllCountries();
 	}
 	
-	public Set<Country> cercaSitiRaggiungibili(Country source){
+	/*public Set<Country> cercaSitiRaggiungibili(Country source){
 		ConnectivityInspector<Country, DefaultEdge> inspector=new ConnectivityInspector<Country, DefaultEdge>(this.grafo);
 		Set<Country> sitiRaggiungibili=inspector.connectedSetOf(source);
 		return sitiRaggiungibili;
+	}*/
+	
+	public List<Country> cercaSitiRaggiungibili(Country source){
+		List<Country> visita= new ArrayList<>();
+		DepthFirstIterator<Country, DefaultEdge> dfv=new DepthFirstIterator<>(this.grafo,source);
+		while(dfv.hasNext()) {
+			visita.add(dfv.next());
+		}
+		return visita;
 	}
 }
