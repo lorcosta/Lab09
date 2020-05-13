@@ -56,6 +56,10 @@ public class Country {
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "" + countryName;
+	}
 	
 	
 }

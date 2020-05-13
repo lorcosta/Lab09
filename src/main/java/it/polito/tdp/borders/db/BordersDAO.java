@@ -43,6 +43,34 @@ public class BordersDAO {
 			throw new RuntimeException("Error Connection Database");
 		}
 	}
+	/**
+	 * Return a list of the all country in the database
+	 * @return
+	 */
+	public List<Country> loadAllCountries() {
+
+		String sql = "SELECT ccode, StateAbb, StateNme FROM country ORDER BY StateAbb";
+		List<Country> result = new ArrayList<Country>();
+		
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				Country c= new Country(rs.getInt("ccode"),rs.getString("StateNme"),rs.getString("StateAbb"));
+				result.add(c);
+			}
+			
+			conn.close();
+			return result;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Errore connessione al database");
+			throw new RuntimeException("Error Connection Database");
+		}
+	}
 
 	public List<Border> getCountryPairs(int anno,Map<Integer,Country> idMap) {
 		String sql="SELECT state1no,state2no " + 

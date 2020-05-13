@@ -62,4 +62,13 @@ public class Model {
 		result+="Le componenti connesse sono "+compConnesse.size();
 		return result;
 	}
+	public List<Country> listaStati(){
+		return dao.loadAllCountries();
+	}
+	
+	public Set<Country> cercaSitiRaggiungibili(Country source){
+		ConnectivityInspector<Country, DefaultEdge> inspector=new ConnectivityInspector<Country, DefaultEdge>(this.grafo);
+		Set<Country> sitiRaggiungibili=inspector.connectedSetOf(source);
+		return sitiRaggiungibili;
+	}
 }
