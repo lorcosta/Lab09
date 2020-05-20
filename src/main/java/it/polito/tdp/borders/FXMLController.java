@@ -56,7 +56,8 @@ public class FXMLController {
     	}
     	model.createGraph(year);
     	//Set<Country> raggiungibili=model.cercaSitiRaggiungibili(source);
-    	List<Country> raggiungibili=model.cercaSitiRaggiungibili(source);
+    	//List<Country> raggiungibili=model.cercaSitiRaggiungibiliInProfondita(source);
+    	List<Country> raggiungibili=model.cercaRicorsivamenteSitiRaggiungibili(source);
     	this.txtResult.appendText("Le città raggiungibili sono:\n"+raggiungibili.toString());
     	this.txtResult.appendText("\nE sono esattamente: "+raggiungibili.size());
     }

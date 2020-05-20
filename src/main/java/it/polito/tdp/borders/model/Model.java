@@ -67,13 +67,13 @@ public class Model {
 		return dao.loadAllCountries();
 	}
 	
-	/*public Set<Country> cercaSitiRaggiungibili(Country source){
+	public Set<Country> cercaSitiRaggiungibili(Country source){
 		ConnectivityInspector<Country, DefaultEdge> inspector=new ConnectivityInspector<Country, DefaultEdge>(this.grafo);
 		Set<Country> sitiRaggiungibili=inspector.connectedSetOf(source);
 		return sitiRaggiungibili;
-	}*/
+	}
 	
-	public List<Country> cercaSitiRaggiungibili(Country source){
+	public List<Country> cercaSitiRaggiungibiliInProfondita(Country source){
 		List<Country> visita= new ArrayList<>();
 		DepthFirstIterator<Country, DefaultEdge> dfv=new DepthFirstIterator<>(this.grafo,source);
 		while(dfv.hasNext()) {
@@ -81,4 +81,44 @@ public class Model {
 		}
 		return visita;
 	}
+	
+	public List<Country> cercaRicorsivamenteSitiRaggiungibili(Country source){
+		List<Country> visita=new ArrayList<>();
+		//fin tanto che ci sono nuovi vertici da scoprire
+		visita.add(source);
+		cerca(visita);
+		return visita;
+	}
+	private void cerca(List<Country> visita) {//visita sarebbe la mia soluzione parziale
+		for(Country c:Graphs.neighborSetOf(this.grafo, visita.get(visita.size()-1))){//se l'ultimo arco aggiunto ha dei 'prossimi'
+			if(!visita.contains(c)) {
+				visita.add(c);
+				cerca(visita);
+			}
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
